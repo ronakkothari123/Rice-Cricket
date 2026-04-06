@@ -1,0 +1,33 @@
+---
+type Action = {
+  label: string;
+  href: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  copy: string;
+  actions: Action[];
+}
+
+const { eyebrow, title, copy, actions } = Astro.props;
+---
+
+<section class="cta-block">
+  <div class="cta-block__inner">
+    {eyebrow && <p class="section-shell__eyebrow">{eyebrow}</p>}
+    <h2>{title}</h2>
+    <p>{copy}</p>
+    <div class="cta-block__actions">
+      {actions.map((action, index) => (
+        <a
+          class={index === 0 ? "button button--primary" : "button button--secondary"}
+          href={action.href}
+        >
+          {action.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatDate, toBasePath } from "@utils/format";
+
+const stories = (await getCollection("stories")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<BaseLayout title="Stories" description="Stories and updates from Rice Cricket Club">
+  <SectionShell
+    eyebrow="Stories"
+    title="One collection for announcements, recaps, milestones, and features."
+    lede="This route validates the editorial architecture chosen in the planning docs."
+  >
+    <div class="grid grid--two">
+      {stories.map((story) => (
+        <article class="surface-card">
+          <h3>
+            <a href={toBasePath(`/stories/${story.data.slug}`)}>{story.data.title}</a>
+          </h3>
+          <p class="surface-card__meta">
+            <span>{story.data.category}</span>
+            <span aria-hidden="true">/</span>
+            <span>{formatDate(story.data.publishDate)}</span>
+          </p>
+          <p>{story.data.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

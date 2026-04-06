@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { sortLeadership } from "@utils/content";
+
+const leaders = sortLeadership(await getCollection("leadership"));
+---
+
+<BaseLayout title="Leadership" description="Leadership and continuity at Rice Cricket Club">
+  <SectionShell
+    eyebrow="Leadership"
+    title="A public leadership layer that signals continuity without requiring a full roster."
+    lede="This route is intentionally leadership-first for version 1 so the club can stay current more easily across officer transitions."
+  >
+    <div class="grid grid--two">
+      {leaders.map((leader) => (
+        <article class="surface-card">
+          <img src={leader.data.photo.src} alt={leader.data.name} />
+          <p class="section-shell__eyebrow">{leader.data.role}</p>
+          <h3>{leader.data.name}</h3>
+          <p>{leader.data.bio}</p>
+          <p class="surface-card__meta">
+            {leader.data.major && <span>{leader.data.major}</span>}
+            {leader.data.year && <span aria-hidden="true">/</span>}
+            {leader.data.year && <span>{leader.data.year}</span>}
+          </p>
+          {leader.data.email && (
+            <p>
+              <a href={`mailto:${leader.data.email}`}>{leader.data.email}</a>
+            </p>
+          )}
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

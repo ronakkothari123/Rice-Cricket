@@ -1,0 +1,67 @@
+---
+import CtaBlock from "@components/sections/CtaBlock.astro";
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { joinFaqs } from "@data/faqs";
+import { siteConfig } from "@data/site";
+---
+
+<BaseLayout title="Join" description="How to join Rice Cricket Club">
+  <SectionShell
+    eyebrow="Join"
+    title="A clear path for curious beginners and experienced players."
+    lede="This page stub focuses on the information architecture from the planning phase: who should join, what to expect, and how first contact should feel."
+  >
+    <div class="grid grid--three">
+      <article class="surface-card">
+        <h3>Beginners welcome</h3>
+        <p>
+          The recruiting story should make clear that not everyone needs prior club cricket
+          experience to belong here.
+        </p>
+      </article>
+      <article class="surface-card">
+        <h3>Competitive pathway</h3>
+        <p>
+          Students who already play should be able to see that the club takes matches, growth, and
+          structure seriously.
+        </p>
+      </article>
+      <article class="surface-card">
+        <h3>Simple first step</h3>
+        <p>
+          Version 1 deliberately uses an email-first flow so future officers can maintain the site
+          without backend complexity.
+        </p>
+      </article>
+    </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="Contact" title="What happens first">
+    <article class="surface-card">
+      <h3>Email the club</h3>
+      <p>
+        The shared inbox for this scaffold is <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
+        Replace this placeholder with the club's real contact address before launch.
+      </p>
+    </article>
+  </SectionShell>
+
+  <SectionShell eyebrow="FAQ" title="Questions future students are likely to ask">
+    <div class="grid grid--two">
+      {joinFaqs.map((faq) => (
+        <article class="surface-card">
+          <h3>{faq.question}</h3>
+          <p>{faq.answer}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <CtaBlock
+    eyebrow="Next step"
+    title="Keep the join path human and low-friction."
+    copy="Later chunks can refine tone, visuals, and stronger social proof, but the architectural choice for version 1 is already in place: clear information plus a direct email call to action."
+    actions={[{ label: "Email the Club", href: `mailto:${siteConfig.contactEmail}` }]}
+  />
+</BaseLayout>

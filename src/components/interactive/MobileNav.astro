@@ -1,0 +1,20 @@
+---
+import { siteConfig } from "@data/site";
+import { toBasePath } from "@utils/format";
+---
+
+<details class="mobile-nav">
+  <summary aria-label="Open navigation menu">Menu</summary>
+  <nav class="mobile-nav__panel" aria-label="Mobile">
+    <ul>
+      {siteConfig.primaryNav.map((item) => (
+        <li>
+          <a href={toBasePath(item.href)}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+    <a class="button button--primary mobile-nav__cta" href={toBasePath("/join")}>
+      Join Rice Cricket
+    </a>
+  </nav>
+</details>

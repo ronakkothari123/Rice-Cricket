@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatDate } from "@utils/format";
+
+const matches = (await getCollection("matches")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Matches" description="Fixtures and results for Rice Cricket Club">
+  <SectionShell
+    eyebrow="Matches"
+    title="A match archive designed for continuity rather than complexity."
+    lede="This page is intentionally lightweight in Chunk 2. It validates the collection shape, archive route, and shared layout patterns."
+  >
+    <div class="grid grid--two">
+      {matches.map((match) => (
+        <article class="surface-card">
+          <p class="section-shell__eyebrow">{match.data.status}</p>
+          <h3>{match.data.opponent}</h3>
+          <p class="surface-card__meta">
+            <span>{formatDate(match.data.date)}</span>
+            <span aria-hidden="true">/</span>
+            <span>{match.data.competition}</span>
+          </p>
+          <p>{match.data.scoreSummary ?? match.data.notes ?? "Result details will expand in later chunks."}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

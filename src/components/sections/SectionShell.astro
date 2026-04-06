@@ -1,0 +1,22 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+}
+
+const { eyebrow, title, lede } = Astro.props;
+---
+
+<section class="section-shell">
+  {(eyebrow || title || lede) && (
+    <header class="section-shell__header">
+      {eyebrow && <p class="section-shell__eyebrow">{eyebrow}</p>}
+      {title && <h2>{title}</h2>}
+      {lede && <p class="section-shell__lede">{lede}</p>}
+    </header>
+  )}
+  <div class="section-shell__content">
+    <slot />
+  </div>
+</section>

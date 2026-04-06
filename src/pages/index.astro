@@ -1,0 +1,108 @@
+---
+import { getCollection } from "astro:content";
+
+import FeatureCard from "@components/cards/FeatureCard.astro";
+import CtaBlock from "@components/sections/CtaBlock.astro";
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { siteConfig } from "@data/site";
+import { getLatestMatches, getLatestStories } from "@utils/content";
+import { formatDate, toBasePath } from "@utils/format";
+
+const stories = getLatestStories(await getCollection("stories"), 2);
+const matches = getLatestMatches(await getCollection("matches"), 2);
+---
+
+<BaseLayout title="Home" description={siteConfig.siteDescription}>
+  <section class="hero">
+    <p class="section-shell__eyebrow">Official Rice University student organization</p>
+    <h1>Cricket at Rice should feel active, welcoming, and built to last.</h1>
+    <p>
+      This scaffolded homepage is intentionally simple, but the architecture already follows the
+      planning docs: recruit students, prove momentum, and support long-term credibility.
+    </p>
+    <div class="hero__actions">
+      {siteConfig.primaryCtas.map((action, index) => (
+        <a
+          class={index === 0 ? "button button--primary" : "button button--secondary"}
+          href={toBasePath(action.href)}
+        >
+          {action.label}
+        </a>
+      ))}
+    </div>
+    <div class="hero__proof">
+      {siteConfig.homepageStats.map((stat) => (
+        <span>{stat.value}: {stat.label}</span>
+      ))}
+    </div>
+  </section>
+
+  <SectionShell
+    eyebrow="Foundation"
+    title="A recruiting and credibility shell"
+    lede="The design system is not finished yet, but the route structure, shared data, and collection model are in place so future chunks can focus on stronger presentation instead of rethinking architecture."
+  >
+    <div class="grid grid--three">
+      {siteConfig.homepageHighlights.map((item) => (
+        <FeatureCard
+          title={item.title}
+          description={item.description}
+          href={toBasePath(item.href)}
+        />
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell
+    eyebrow="Stories"
+    title="Recent club narrative"
+    lede="Stories are already wired as a content collection so announcements, milestones, and recaps can be added without editing route structure."
+  >
+    <div class="grid grid--two">
+      {stories.map((story) => (
+        <article class="surface-card">
+          <h3>
+            <a href={toBasePath(`/stories/${story.data.slug}`)}>{story.data.title}</a>
+          </h3>
+          <p class="surface-card__meta">
+            <span>{story.data.category}</span>
+            <span aria-hidden="true">/</span>
+            <span>{formatDate(story.data.publishDate)}</span>
+          </p>
+          <p>{story.data.summary}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell
+    eyebrow="Matches"
+    title="Visible activity and continuity"
+    lede="The match collection supports current season visibility now and cleaner archives later."
+  >
+    <div class="grid grid--two">
+      {matches.map((match) => (
+        <article class="surface-card">
+          <h3>{match.data.opponent}</h3>
+          <p class="surface-card__meta">
+            <span>{formatDate(match.data.date)}</span>
+            <span aria-hidden="true">/</span>
+            <span>{match.data.status}</span>
+          </p>
+          <p>{match.data.scoreSummary ?? match.data.notes ?? "Fixture placeholder for future result detail."}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <CtaBlock
+    eyebrow="Join"
+    title="Use this version to validate the architecture, then sharpen the experience."
+    copy="Chunk 2 is focused on foundation: static routing, content collections, shared data, and deployment readiness. The next chunk can confidently refine the visual system and navigation polish."
+    actions={[
+      { label: "Start with Join", href: toBasePath("/join") },
+      { label: "Review the Vision", href: toBasePath("/vision") }
+    ]}
+  />
+</BaseLayout>

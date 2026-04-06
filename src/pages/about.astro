@@ -1,0 +1,54 @@
+---
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { aboutFaqs } from "@data/faqs";
+import { milestones } from "@data/milestones";
+---
+
+<BaseLayout title="About" description="About Rice Cricket Club">
+  <SectionShell
+    eyebrow="About"
+    title="A student organization with room to compete, grow, and build culture."
+    lede="This route stub reflects the structure from the planning docs: mission, relevance, continuity, values, and common questions."
+  >
+    <div class="grid grid--two">
+      <article class="surface-card">
+        <h3>Why cricket at Rice</h3>
+        <p>
+          Rice Cricket can serve students who want competition, community, and a campus space for a
+          globally significant sport. The site should make that relevance obvious.
+        </p>
+      </article>
+      <article class="surface-card">
+        <h3>What the club offers</h3>
+        <p>
+          Version 1 is structured to support recruiting, storytelling, leadership continuity, and a
+          clearer public record of club activity.
+        </p>
+      </article>
+    </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="Timeline" title="Milestones and continuity">
+    <div class="grid grid--three">
+      {milestones.map((milestone) => (
+        <article class="surface-card">
+          <p class="section-shell__eyebrow">{milestone.year}</p>
+          <h3>{milestone.title}</h3>
+          <p>{milestone.description}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="FAQ" title="Questions this page should answer">
+    <div class="grid grid--two">
+      {aboutFaqs.map((faq) => (
+        <article class="surface-card">
+          <h3>{faq.question}</h3>
+          <p>{faq.answer}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

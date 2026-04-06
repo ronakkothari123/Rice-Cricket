@@ -1,0 +1,39 @@
+:root {
+  color-scheme: light;
+
+  --color-bg: #f4f0e7;
+  --color-surface: #fcfaf6;
+  --color-surface-strong: #16324f;
+  --color-surface-muted: #e8e2d4;
+  --color-text: #171c21;
+  --color-text-soft: #405160;
+  --color-border: #d6d0c5;
+  --color-accent: #456b52;
+  --color-accent-strong: #274432;
+  --color-link: #16324f;
+  --color-inverse: #f8f6f1;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-ui: var(--font-display);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.9rem;
+  --radius-lg: 1.4rem;
+
+  --shadow-soft: 0 16px 40px rgba(22, 50, 79, 0.08);
+
+  --container-wide: 78rem;
+  --container-reading: 46rem;
+  --header-height: 5rem;
+}

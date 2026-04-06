@@ -1,0 +1,44 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatDate } from "@utils/format";
+
+export async function getStaticPaths() {
+  const galleries = await getCollection("galleries");
+
+  return galleries.map((gallery) => ({
+    params: { slug: gallery.data.slug },
+    props: { gallery }
+  }));
+}
+
+interface Props {
+  gallery: CollectionEntry<"galleries">;
+}
+
+const { gallery } = Astro.props;
+---
+
+<BaseLayout title={gallery.data.title} description={gallery.data.summary}>
+  <SectionShell
+    eyebrow="Gallery"
+    title={gallery.data.title}
+    lede={`${gallery.data.season} / ${formatDate(gallery.data.eventDate)}`}
+  >
+    <div class="grid grid--two">
+      {gallery.data.photos.map((photo) => (
+        <figure class="surface-card">
+          <img src={photo.src.src} alt={photo.alt} />
+          {(photo.caption || photo.credit) && (
+            <figcaption>
+              {photo.caption && <p>{photo.caption}</p>}
+              {photo.credit && <p class="surface-card__meta">{photo.credit}</p>}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { milestones } from "@data/milestones";
+import { visionHighlights, visionPrinciples } from "@data/vision";
+---
+
+<BaseLayout title="Vision" description="Long-term vision for Rice Cricket Club facilities and growth">
+  <SectionShell
+    eyebrow="Vision"
+    title="Use the website to connect present activity with future campus support."
+    lede="The final page design will become more persuasive later, but the content architecture already reflects the planning docs: evidence first, then the case for facilities."
+  >
+    <div class="grid grid--three">
+      {visionHighlights.map((item) => (
+        <article class="surface-card">
+          <h3>{item.title}</h3>
+          <p>{item.detail}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="Principles" title="How this page should frame support requests">
+    <div class="grid grid--three">
+      {visionPrinciples.map((principle) => (
+        <article class="surface-card">
+          <p>{principle}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="Milestones" title="Proof before pitch">
+    <div class="grid grid--three">
+      {milestones.map((milestone) => (
+        <article class="surface-card">
+          <p class="section-shell__eyebrow">{milestone.year}</p>
+          <h3>{milestone.title}</h3>
+          <p>{milestone.description}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>

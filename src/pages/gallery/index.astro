@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+
+import SectionShell from "@components/sections/SectionShell.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { formatDate, toBasePath } from "@utils/format";
+
+const galleries = (await getCollection("galleries")).sort(
+  (a, b) => b.data.eventDate.valueOf() - a.data.eventDate.valueOf()
+);
+---
+
+<BaseLayout title="Gallery" description="Photo galleries from Rice Cricket Club">
+  <SectionShell
+    eyebrow="Gallery"
+    title="An image-forward route ready for stronger presentation later."
+    lede="Chunk 2 focuses on collection wiring, route structure, and accessible placeholder output."
+  >
+    <div class="grid grid--two">
+      {galleries.map((gallery) => (
+        <article class="surface-card">
+          <img src={gallery.data.coverImage.src} alt={gallery.data.title} />
+          <h3>
+            <a href={toBasePath(`/gallery/${gallery.data.slug}`)}>{gallery.data.title}</a>
+          </h3>
+          <p class="surface-card__meta">
+            <span>{gallery.data.season}</span>
+            <span aria-hidden="true">/</span>
+            <span>{formatDate(gallery.data.eventDate)}</span>
+          </p>
+          <p>{gallery.data.summary}</p>
+        </article>
+      ))}
+    </div>
+  </SectionShell>
+</BaseLayout>
