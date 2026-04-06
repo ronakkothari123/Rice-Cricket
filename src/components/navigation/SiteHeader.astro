@@ -3,6 +3,11 @@ import MobileNav from "@components/interactive/MobileNav.astro";
 import { siteConfig } from "@data/site";
 import { toBasePath } from "@utils/format";
 
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
 const homeHref = toBasePath("/");
 const joinHref = toBasePath("/join");
 ---
@@ -18,20 +23,34 @@ const joinHref = toBasePath("/join");
       <ul>
         {siteConfig.primaryNav.map((item) => (
           <li>
-            <a href={toBasePath(item.href)}>{item.label}</a>
+            <a
+              href={toBasePath(item.href)}
+              aria-current={currentPath.startsWith(item.href) && item.href !== "/" ? "page" : undefined}
+              class:list={[
+                "site-nav__link",
+                item.href === "/join" && "site-nav__link--join",
+                currentPath.startsWith(item.href) && item.href !== "/" && "site-nav__link--active"
+              ]}
+            >
+              {item.label}
+            </a>
           </li>
         ))}
       </ul>
     </nav>
 
     <div class="site-header__actions">
-      <a class="site-header__utility" href={`mailto:${siteConfig.contactEmail}`}>
-        {siteConfig.contactEmail}
-      </a>
-      <a class="button button--primary" href={joinHref}>
+      <div class="site-header__utility">
+        <a href={`mailto:${siteConfig.contactEmail}`}>Email</a>
+        <span aria-hidden="true">/</span>
+        <a href={siteConfig.socialLinks[2]?.href} target="_blank" rel="noreferrer">
+          Instagram
+        </a>
+      </div>
+      <a class="button button--primary button--compact" href={joinHref}>
         Join
       </a>
-      <MobileNav />
+      <MobileNav currentPath={currentPath} />
     </div>
   </div>
 </header>

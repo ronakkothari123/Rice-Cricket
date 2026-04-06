@@ -1,105 +1,136 @@
 ---
 import { getCollection } from "astro:content";
 
+import heroPractice from "@assets/images/shared/hero-practice.svg";
+import matchDay from "@assets/images/shared/match-day.svg";
+import teamHuddle from "@assets/images/shared/team-huddle.svg";
 import FeatureCard from "@components/cards/FeatureCard.astro";
+import MatchCard from "@components/cards/MatchCard.astro";
+import StatCard from "@components/cards/StatCard.astro";
+import StoryCard from "@components/cards/StoryCard.astro";
 import CtaBlock from "@components/sections/CtaBlock.astro";
+import MediaSplit from "@components/sections/MediaSplit.astro";
+import PageHero from "@components/sections/PageHero.astro";
 import SectionShell from "@components/sections/SectionShell.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { siteConfig } from "@data/site";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import { getLatestMatches, getLatestStories } from "@utils/content";
-import { formatDate, toBasePath } from "@utils/format";
+import { toBasePath } from "@utils/format";
 
 const stories = getLatestStories(await getCollection("stories"), 2);
 const matches = getLatestMatches(await getCollection("matches"), 2);
 ---
 
 <BaseLayout title="Home" description={siteConfig.siteDescription}>
-  <section class="hero">
-    <p class="section-shell__eyebrow">Official Rice University student organization</p>
-    <h1>Cricket at Rice should feel active, welcoming, and built to last.</h1>
-    <p>
-      This scaffolded homepage is intentionally simple, but the architecture already follows the
-      planning docs: recruit students, prove momentum, and support long-term credibility.
-    </p>
-    <div class="hero__actions">
-      {siteConfig.primaryCtas.map((action, index) => (
-        <a
-          class={index === 0 ? "button button--primary" : "button button--secondary"}
-          href={toBasePath(action.href)}
-        >
-          {action.label}
-        </a>
-      ))}
-    </div>
-    <div class="hero__proof">
-      {siteConfig.homepageStats.map((stat) => (
-        <span>{stat.value}: {stat.label}</span>
-      ))}
-    </div>
-  </section>
+  <PageHero
+    home={true}
+    eyebrow={siteConfig.siteEyebrow}
+    title="A modern home for cricket, community, and momentum at Rice."
+    lede="This shell now reflects the tone established in the planning docs: premium but approachable, editorial rather than generic, and strong enough to support both recruiting and credibility."
+    imageSrc={heroPractice.src}
+    imageAlt="Rice Cricket practice placeholder illustration"
+    actions={siteConfig.primaryCtas.map((action) => ({ ...action, href: toBasePath(action.href) }))}
+    proof={siteConfig.homepageStats.map((stat) => `${stat.value} / ${stat.label}`)}
+  />
 
   <SectionShell
-    eyebrow="Foundation"
-    title="A recruiting and credibility shell"
-    lede="The design system is not finished yet, but the route structure, shared data, and collection model are in place so future chunks can focus on stronger presentation instead of rethinking architecture."
+    eyebrow="Proof"
+    title="Fast signals that Rice Cricket is active, thoughtful, and worth following."
+    lede="These stat cards establish a reusable proof language for the homepage, About, and Vision pages."
+    tone="subtle"
+  >
+    <div class="grid grid--three">
+      {siteConfig.homepageStats.map((stat) => (
+        <StatCard value={stat.value} label={stat.label} note={stat.note} />
+      ))}
+    </div>
+  </SectionShell>
+
+  <SectionShell
+    eyebrow="Club Story"
+    title="The site should feel welcoming and substantial at the same time."
+    lede="The editorial athletics direction matters because the club needs to attract new students while also looking organized and durable to administrators and supporters."
+  >
+    <MediaSplit
+      eyebrow="Culture"
+      title="Show belonging and ambition together."
+      copy="The eventual site will tell a richer story, but the foundation now supports that story with stronger hierarchy, more intentional layout rhythm, and reusable section patterns."
+      imageSrc={teamHuddle.src}
+      imageAlt="Rice Cricket team culture placeholder illustration"
+      points={[
+        "Recruit new students with warmth and clarity.",
+        "Document stories, matches, and galleries without backend complexity.",
+        "Build a public record strong enough to support long-term facilities conversations."
+      ]}
+    >
+      <div class="page-actions">
+        <a class="button button--secondary" href={toBasePath("/about")}>Learn about the club</a>
+      </div>
+    </MediaSplit>
+  </SectionShell>
+
+  <SectionShell
+    eyebrow="Pathways"
+    title="The homepage should route visitors intentionally."
+    lede="These highlight cards correspond to the three jobs the site needs to do well: recruit, prove activity, and build credibility."
+    spacing="compact"
   >
     <div class="grid grid--three">
       {siteConfig.homepageHighlights.map((item) => (
-        <FeatureCard
-          title={item.title}
-          description={item.description}
-          href={toBasePath(item.href)}
-        />
+        <FeatureCard title={item.title} description={item.description} href={toBasePath(item.href)} />
       ))}
     </div>
   </SectionShell>
 
   <SectionShell
     eyebrow="Stories"
-    title="Recent club narrative"
-    lede="Stories are already wired as a content collection so announcements, milestones, and recaps can be added without editing route structure."
+    title="Recent narrative makes the club feel current."
+    lede="The site should not read like a brochure alone. It also needs living proof that the club is active and growing."
   >
     <div class="grid grid--two">
       {stories.map((story) => (
-        <article class="surface-card">
-          <h3>
-            <a href={toBasePath(`/stories/${story.data.slug}`)}>{story.data.title}</a>
-          </h3>
-          <p class="surface-card__meta">
-            <span>{story.data.category}</span>
-            <span aria-hidden="true">/</span>
-            <span>{formatDate(story.data.publishDate)}</span>
-          </p>
-          <p>{story.data.summary}</p>
-        </article>
+        <StoryCard story={story} />
       ))}
     </div>
   </SectionShell>
 
   <SectionShell
     eyebrow="Matches"
-    title="Visible activity and continuity"
-    lede="The match collection supports current season visibility now and cleaner archives later."
+    title="Competitive proof belongs in the public face."
+    lede="Match cards give the homepage a clearer signal that Rice Cricket is not hypothetical or purely social."
+    tone="subtle"
   >
     <div class="grid grid--two">
       {matches.map((match) => (
-        <article class="surface-card">
-          <h3>{match.data.opponent}</h3>
-          <p class="surface-card__meta">
-            <span>{formatDate(match.data.date)}</span>
-            <span aria-hidden="true">/</span>
-            <span>{match.data.status}</span>
-          </p>
-          <p>{match.data.scoreSummary ?? match.data.notes ?? "Fixture placeholder for future result detail."}</p>
-        </article>
+        <MatchCard match={match} />
       ))}
     </div>
   </SectionShell>
 
+  <SectionShell
+    eyebrow="Vision"
+    title="Facilities ambition should emerge from visible momentum."
+    lede="The vision page works best when the homepage has already made the club feel active, welcoming, and worth investing in."
+  >
+    <MediaSplit
+      eyebrow="Long-term case"
+      title="Support starts with a credible public record."
+      copy="The website is part of how Rice Cricket can show continuity, leadership, growth, and student value before asking for stronger infrastructure."
+      imageSrc={matchDay.src}
+      imageAlt="Rice Cricket matchday placeholder illustration"
+      reversed={true}
+      points={[
+        "Why facilities matter should be framed practically.",
+        "Growth evidence should come before the ask.",
+        "The visual language should stay calm, disciplined, and persuasive."
+      ]}
+    />
+  </SectionShell>
+
   <CtaBlock
     eyebrow="Join"
-    title="Use this version to validate the architecture, then sharpen the experience."
-    copy="Chunk 2 is focused on foundation: static routing, content collections, shared data, and deployment readiness. The next chunk can confidently refine the visual system and navigation polish."
+    title="The foundation is ready for stronger page-level storytelling next."
+    copy="Chunk 3 gives the project a cohesive shell, more expressive typography, reusable cards, and clearer route structure. Chunk 4 can focus on deeper content and page composition instead of rebuilding basics."
     actions={[
       { label: "Start with Join", href: toBasePath("/join") },
       { label: "Review the Vision", href: toBasePath("/vision") }

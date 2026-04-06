@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  profile: CollectionEntry<"leadership">;
+}
+
+const { profile } = Astro.props;
+---
+
+<article class="profile-card">
+  <img class="profile-card__image" src={profile.data.photo.src} alt={profile.data.name} />
+  <div class="profile-card__body">
+    <p class="profile-card__role">{profile.data.role}</p>
+    <h3>{profile.data.name}</h3>
+    <p>{profile.data.bio}</p>
+    <p class="profile-card__meta">
+      {profile.data.major && <span>{profile.data.major}</span>}
+      {profile.data.year && profile.data.major && <span aria-hidden="true">/</span>}
+      {profile.data.year && <span>{profile.data.year}</span>}
+    </p>
+    {profile.data.email && (
+      <a class="profile-card__link" href={`mailto:${profile.data.email}`}>
+        {profile.data.email}
+      </a>
+    )}
+  </div>
+</article>

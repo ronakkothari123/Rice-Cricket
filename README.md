@@ -148,15 +148,25 @@ Do not add `public/CNAME` until the domain decision is confirmed.
 - Treat the planning docs as the product source of truth
 - Preserve accessibility fundamentals as the design gets more polished
 
-## What Chunk 3 Should Focus On
+## Design System Notes
 
-Chunk 3 should refine the presentation layer without changing the architectural direction established here:
+Chunk 3 establishes a shared presentation foundation without turning the project into a complicated theming system.
 
-- Design token refinement
-- Typography system polish
-- Header and navigation polish
-- Footer polish
-- Stronger reusable UI components
-- More intentional page shell styling and hierarchy
+- `src/styles/tokens.css` defines semantic tokens for color, type roles, spacing, layout widths, radii, shadows, and motion timing
+- `src/styles/global.css` provides the global shell, typography rhythm, card language, and responsive defaults
+- `src/components/sections/` holds shared structural primitives such as `PageHero`, `SectionShell`, `SectionIntro`, `MediaSplit`, and `CtaBlock`
+- `src/components/cards/` and `src/components/interactive/` hold the reusable UI pieces that future page work should compose rather than replace
 
-That work can now happen on top of a stable Astro, content, routing, and deployment foundation.
+The guiding idea is simple: strong shared structure first, page-specific polish second.
+
+## What Chunk 4 Should Focus On
+
+Chunk 4 should build on this design-ready foundation by deepening the actual page content and composition:
+
+- Stronger homepage storytelling and image hierarchy
+- Richer About and Join page sections
+- More complete Leadership and Vision page content
+- Better collection page presentation for Stories, Matches, and Gallery
+- Content loading with more real club material and less placeholder copy
+
+Chunk 4 should not need to revisit the overall shell, token system, or base navigation architecture unless a clear issue appears.

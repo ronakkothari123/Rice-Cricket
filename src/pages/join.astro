@@ -1,67 +1,78 @@
 ---
+import heroPractice from "@assets/images/shared/hero-practice.svg";
+import FeatureCard from "@components/cards/FeatureCard.astro";
+import FAQAccordion from "@components/interactive/FAQAccordion.astro";
 import CtaBlock from "@components/sections/CtaBlock.astro";
+import MediaSplit from "@components/sections/MediaSplit.astro";
+import PageHero from "@components/sections/PageHero.astro";
 import SectionShell from "@components/sections/SectionShell.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { joinFaqs } from "@data/faqs";
 import { siteConfig } from "@data/site";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { toBasePath } from "@utils/format";
 ---
 
 <BaseLayout title="Join" description="How to join Rice Cricket Club">
-  <SectionShell
+  <PageHero
     eyebrow="Join"
-    title="A clear path for curious beginners and experienced players."
-    lede="This page stub focuses on the information architecture from the planning phase: who should join, what to expect, and how first contact should feel."
+    title="A welcoming first step for beginners, returners, and experienced players."
+    lede="The join path should feel direct and low-friction. Version 1 uses an email-first flow so the club can stay responsive and maintainable without building unnecessary infrastructure."
+    imageSrc={heroPractice.src}
+    imageAlt="Rice Cricket practice placeholder illustration"
+    actions={[
+      { label: "Email the Club", href: `mailto:${siteConfig.contactEmail}`, external: true },
+      { label: "See the Club in Action", href: toBasePath("/gallery") }
+    ]}
+    proof={["Email-first outreach", "Beginner-friendly", "Maintainable v1"]}
+  />
+
+  <SectionShell
+    eyebrow="Who should join"
+    title="Make the invitation broader than experienced players only."
+    lede="These reusable cards help the page speak to different student mindsets without overcomplicating the joining path."
   >
     <div class="grid grid--three">
-      <article class="surface-card">
-        <h3>Beginners welcome</h3>
-        <p>
-          The recruiting story should make clear that not everyone needs prior club cricket
-          experience to belong here.
-        </p>
-      </article>
-      <article class="surface-card">
-        <h3>Competitive pathway</h3>
-        <p>
-          Students who already play should be able to see that the club takes matches, growth, and
-          structure seriously.
-        </p>
-      </article>
-      <article class="surface-card">
-        <h3>Simple first step</h3>
-        <p>
-          Version 1 deliberately uses an email-first flow so future officers can maintain the site
-          without backend complexity.
-        </p>
-      </article>
+      <FeatureCard
+        title="Curious beginners"
+        description="The page should reassure students that interest and openness matter more than prior formal club experience."
+      />
+      <FeatureCard
+        title="Returning players"
+        description="Students who miss the sport should be able to picture a realistic, welcoming way back into organized play."
+      />
+      <FeatureCard
+        title="Competitive contributors"
+        description="Experienced players should see clear signs that the club values structure, improvement, and match readiness."
+      />
     </div>
   </SectionShell>
 
-  <SectionShell eyebrow="Contact" title="What happens first">
-    <article class="surface-card">
-      <h3>Email the club</h3>
-      <p>
-        The shared inbox for this scaffold is <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
-        Replace this placeholder with the club's real contact address before launch.
-      </p>
-    </article>
+  <SectionShell eyebrow="What to expect" title="Demystify the first few steps" tone="subtle">
+    <MediaSplit
+      title="A clear first contact matters more than a complicated form."
+      copy="For version 1, the best recruiting move is clarity. Tell students how to reach out, what happens after that, and what attending a first session should feel like."
+      imageSrc={heroPractice.src}
+      imageAlt="Rice Cricket practice placeholder illustration"
+      points={[
+        "Reach out by email.",
+        "Get context on scheduling, expectations, and what to bring.",
+        "Show up without feeling like you need to already belong."
+      ]}
+    >
+      <div class="page-actions">
+        <a class="button button--primary" href={`mailto:${siteConfig.contactEmail}`}>Email the Club</a>
+      </div>
+    </MediaSplit>
   </SectionShell>
 
-  <SectionShell eyebrow="FAQ" title="Questions future students are likely to ask">
-    <div class="grid grid--two">
-      {joinFaqs.map((faq) => (
-        <article class="surface-card">
-          <h3>{faq.question}</h3>
-          <p>{faq.answer}</p>
-        </article>
-      ))}
-    </div>
+  <SectionShell eyebrow="FAQ" title="Questions future students are likely to ask" spacing="compact">
+    <FAQAccordion items={joinFaqs} />
   </SectionShell>
 
   <CtaBlock
     eyebrow="Next step"
-    title="Keep the join path human and low-friction."
-    copy="Later chunks can refine tone, visuals, and stronger social proof, but the architectural choice for version 1 is already in place: clear information plus a direct email call to action."
-    actions={[{ label: "Email the Club", href: `mailto:${siteConfig.contactEmail}` }]}
+    title="Keep the join path direct, warm, and credible."
+    copy={`The shared inbox in this scaffold is ${siteConfig.contactEmail}. Replace it with the club's real contact address before launch, but keep the simple email-first path unless a later phase proves a form is truly necessary.`}
+    actions={[{ label: "Email the Club", href: `mailto:${siteConfig.contactEmail}`, external: true }]}
   />
 </BaseLayout>

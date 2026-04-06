@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import TagList from "@components/interactive/TagList.astro";
+import { formatDate, toBasePath } from "@utils/format";
+
+interface Props {
+  story: CollectionEntry<"stories">;
+}
+
+const { story } = Astro.props;
+---
+
+<article class="story-card">
+  {story.data.heroImage && (
+    <a class="story-card__media" href={toBasePath(`/stories/${story.data.slug}`)}>
+      <img src={story.data.heroImage.src} alt={story.data.title} />
+    </a>
+  )}
+  <div class="story-card__body">
+    <p class="story-card__meta">
+      <span>{story.data.category}</span>
+      <span aria-hidden="true">/</span>
+      <span>{formatDate(story.data.publishDate)}</span>
+    </p>
+    <h3>
+      <a href={toBasePath(`/stories/${story.data.slug}`)}>{story.data.title}</a>
+    </h3>
+    <p>{story.data.summary}</p>
+    {story.data.tags.length > 0 && <TagList tags={story.data.tags} />}
+  </div>
+</article>

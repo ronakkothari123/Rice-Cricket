@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import TagChip from "@components/interactive/TagChip.astro";
+import { formatDate } from "@utils/format";
+
+interface Props {
+  match: CollectionEntry<"matches">;
+}
+
+const { match } = Astro.props;
+const tone = match.data.result === "win" ? "success" : match.data.status === "upcoming" ? "neutral" : "default";
+---
+
+<article class="match-card">
+  <div class="match-card__header">
+    <div>
+      <p class="match-card__eyebrow">{match.data.competition}</p>
+      <h3>{match.data.opponent}</h3>
+    </div>
+    <TagChip label={match.data.status} tone={tone} />
+  </div>
+  <p class="match-card__meta">
+    <span>{formatDate(match.data.date)}</span>
+    <span aria-hidden="true">/</span>
+    <span>{match.data.venue}</span>
+  </p>
+  <p>{match.data.scoreSummary ?? match.data.notes ?? "Match detail will expand in later chunks."}</p>
+</article>

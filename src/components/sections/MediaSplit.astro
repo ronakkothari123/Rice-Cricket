@@ -1,0 +1,38 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  copy: string;
+  imageSrc: string;
+  imageAlt: string;
+  reversed?: boolean;
+  points?: string[];
+}
+
+const {
+  eyebrow,
+  title,
+  copy,
+  imageSrc,
+  imageAlt,
+  reversed = false,
+  points = []
+} = Astro.props;
+---
+
+<section class:list={["media-split", reversed && "media-split--reversed"]}>
+  <div class="media-split__content">
+    {eyebrow && <p class="section-intro__eyebrow">{eyebrow}</p>}
+    <h3 class="media-split__title">{title}</h3>
+    <p class="media-split__copy">{copy}</p>
+    {points.length > 0 && (
+      <ul class="media-split__points">
+        {points.map((point) => <li>{point}</li>)}
+      </ul>
+    )}
+    <slot />
+  </div>
+  <div class="media-split__media">
+    <img src={imageSrc} alt={imageAlt} />
+  </div>
+</section>

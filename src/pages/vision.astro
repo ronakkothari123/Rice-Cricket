@@ -1,44 +1,51 @@
 ---
+import matchDay from "@assets/images/shared/match-day.svg";
+import FeatureCard from "@components/cards/FeatureCard.astro";
+import StatCard from "@components/cards/StatCard.astro";
+import MediaSplit from "@components/sections/MediaSplit.astro";
+import PageHero from "@components/sections/PageHero.astro";
 import SectionShell from "@components/sections/SectionShell.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { milestones } from "@data/milestones";
 import { visionHighlights, visionPrinciples } from "@data/vision";
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Vision" description="Long-term vision for Rice Cricket Club facilities and growth">
+  <PageHero
+    eyebrow="Vision"
+    title="Connect visible activity now with stronger campus support later."
+    lede="This page should help stakeholders understand that facilities support is not a vague wish. It is a practical next step built on continuity, growth, and student value."
+    imageSrc={matchDay.src}
+    imageAlt="Rice Cricket matchday placeholder illustration"
+    proof={["Evidence before ask", "Campus value", "Facilities case"]}
+  />
+
   <SectionShell
     eyebrow="Vision"
-    title="Use the website to connect present activity with future campus support."
-    lede="The final page design will become more persuasive later, but the content architecture already reflects the planning docs: evidence first, then the case for facilities."
+    title="Use the site to make the long-term case more legible."
+    lede="The club should look thoughtful rather than needy. This route is structured to lead with evidence, context, and student value."
   >
     <div class="grid grid--three">
       {visionHighlights.map((item) => (
-        <article class="surface-card">
-          <h3>{item.title}</h3>
-          <p>{item.detail}</p>
-        </article>
+        <FeatureCard title={item.title} description={item.detail} />
       ))}
     </div>
   </SectionShell>
 
-  <SectionShell eyebrow="Principles" title="How this page should frame support requests">
-    <div class="grid grid--three">
-      {visionPrinciples.map((principle) => (
-        <article class="surface-card">
-          <p>{principle}</p>
-        </article>
-      ))}
-    </div>
+  <SectionShell eyebrow="Framing" title="How support requests should read" tone="subtle">
+    <MediaSplit
+      title="Facilities should be framed as student-life infrastructure."
+      copy="The strongest case is not just that cricket would benefit from better facilities. It is that students, continuity, recruiting, and campus culture all benefit when the club has room to grow."
+      imageSrc={matchDay.src}
+      imageAlt="Rice Cricket matchday placeholder illustration"
+      points={visionPrinciples}
+    />
   </SectionShell>
 
   <SectionShell eyebrow="Milestones" title="Proof before pitch">
     <div class="grid grid--three">
       {milestones.map((milestone) => (
-        <article class="surface-card">
-          <p class="section-shell__eyebrow">{milestone.year}</p>
-          <h3>{milestone.title}</h3>
-          <p>{milestone.description}</p>
-        </article>
+        <StatCard value={milestone.year} label={milestone.title} note={milestone.description} />
       ))}
     </div>
   </SectionShell>

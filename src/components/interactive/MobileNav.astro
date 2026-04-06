@@ -1,18 +1,35 @@
 ---
 import { siteConfig } from "@data/site";
 import { toBasePath } from "@utils/format";
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
 ---
 
 <details class="mobile-nav">
-  <summary aria-label="Open navigation menu">Menu</summary>
+  <summary aria-label="Open navigation menu">
+    <span>Menu</span>
+  </summary>
   <nav class="mobile-nav__panel" aria-label="Mobile">
     <ul>
       {siteConfig.primaryNav.map((item) => (
         <li>
-          <a href={toBasePath(item.href)}>{item.label}</a>
+          <a
+            href={toBasePath(item.href)}
+            aria-current={currentPath.startsWith(item.href) && item.href !== "/" ? "page" : undefined}
+          >
+            {item.label}
+          </a>
         </li>
       ))}
     </ul>
+    <div class="mobile-nav__meta">
+      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+      <a href={siteConfig.socialLinks[2]?.href} target="_blank" rel="noreferrer">Instagram</a>
+    </div>
     <a class="button button--primary mobile-nav__cta" href={toBasePath("/join")}>
       Join Rice Cricket
     </a>

@@ -1,7 +1,10 @@
 ---
+import SectionIntro from "@components/sections/SectionIntro.astro";
+
 type Action = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 interface Props {
@@ -16,14 +19,14 @@ const { eyebrow, title, copy, actions } = Astro.props;
 
 <section class="cta-block">
   <div class="cta-block__inner">
-    {eyebrow && <p class="section-shell__eyebrow">{eyebrow}</p>}
-    <h2>{title}</h2>
-    <p>{copy}</p>
+    <SectionIntro eyebrow={eyebrow} title={title} lede={copy} />
     <div class="cta-block__actions">
       {actions.map((action, index) => (
         <a
           class={index === 0 ? "button button--primary" : "button button--secondary"}
           href={action.href}
+          target={action.external ? "_blank" : undefined}
+          rel={action.external ? "noreferrer" : undefined}
         >
           {action.label}
         </a>

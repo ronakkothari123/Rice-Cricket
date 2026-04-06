@@ -39,6 +39,7 @@ export type SeoDefaults = {
 
 export type SiteConfig = {
   siteTitle: string;
+  siteEyebrow: string;
   siteDescription: string;
   contactEmail: string;
   primaryNav: NavItem[];
@@ -55,6 +56,7 @@ export type SiteConfig = {
 
 export const siteConfig: SiteConfig = {
   siteTitle: "Rice Cricket Club",
+  siteEyebrow: "Official Rice University student organization",
   siteDescription:
     "The official Rice University student organization for cricket, community, competition, and long-term campus growth.",
   // Replace with the club's actual shared inbox before launch.
@@ -111,9 +113,9 @@ export const siteConfig: SiteConfig = {
     { label: "Instagram", href: "https://instagram.com/ricecricketclub", external: true }
   ],
   homepageStats: [
-    { label: "Club focus", value: "Recruit + Compete", note: "Built for students who want community and serious cricket" },
-    { label: "Publishing model", value: "Evergreen-first", note: "Stable core pages with stories, matches, and galleries layered on top" },
-    { label: "Long-term aim", value: "Nets + Pitch", note: "Support the case for better training and match infrastructure" }
+    { label: "Club focus", value: "Recruit + Compete", note: "Built for students who want both belonging and serious cricket" },
+    { label: "Site model", value: "Static + Maintainable", note: "Designed so future officers can keep it current without a heavy backend" },
+    { label: "Long-term aim", value: "Nets + Pitch", note: "Support the case for better training and match infrastructure over time" }
   ],
   homepageHighlights: [
     {

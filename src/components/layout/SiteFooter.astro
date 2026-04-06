@@ -6,9 +6,16 @@ import { toBasePath } from "@utils/format";
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__intro">
-      <p class="section-shell__eyebrow">Rice Cricket Club</p>
-      <h2>Static, maintainable, and ready for future growth.</h2>
+      <p class="section-intro__eyebrow">Rice Cricket Club</p>
+      <h2>Built to recruit, document momentum, and strengthen the club's long-term case.</h2>
       <p>{siteConfig.siteDescription}</p>
+      <div class="site-footer__socials">
+        {siteConfig.socialLinks.map((link) => (
+          <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noreferrer" : undefined}>
+            {link.label}
+          </a>
+        ))}
+      </div>
     </div>
 
     <div class="site-footer__groups">
@@ -29,6 +36,15 @@ import { toBasePath } from "@utils/format";
             ))}
           </ul>
         </section>
+      ))}
+    </div>
+
+    <div class="site-footer__snapshot">
+      {siteConfig.homepageStats.map((stat) => (
+        <article class="site-footer__snapshot-item">
+          <p class="site-footer__snapshot-value">{stat.value}</p>
+          <p class="site-footer__snapshot-label">{stat.label}</p>
+        </article>
       ))}
     </div>
   </div>

@@ -1,0 +1,59 @@
+---
+interface Action {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  imageSrc: string;
+  imageAlt: string;
+  actions?: Action[];
+  proof?: string[];
+  home?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  imageSrc,
+  imageAlt,
+  actions = [],
+  proof = [],
+  home = false
+} = Astro.props;
+---
+
+<section class:list={["page-hero", home && "page-hero--home"]}>
+  <div class="page-hero__body">
+    <p class="page-hero__eyebrow">{eyebrow}</p>
+    <h1 class="page-hero__title">{title}</h1>
+    <p>{lede}</p>
+    {actions.length > 0 && (
+      <div class="hero-actions">
+        {actions.map((action, index) => (
+          <a
+            class={index === 0 ? "button button--primary" : "button button--secondary"}
+            href={action.href}
+            target={action.external ? "_blank" : undefined}
+            rel={action.external ? "noreferrer" : undefined}
+          >
+            {action.label}
+          </a>
+        ))}
+      </div>
+    )}
+    {proof.length > 0 && (
+      <div class="page-hero__proof">
+        {proof.map((item) => <span>{item}</span>)}
+      </div>
+    )}
+  </div>
+  <div class="page-hero__media">
+    <img src={imageSrc} alt={imageAlt} />
+  </div>
+</section>

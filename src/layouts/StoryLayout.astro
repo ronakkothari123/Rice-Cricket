@@ -15,8 +15,8 @@ const { title, description, publishDate, author, category } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <article class="story-layout">
-    <header class="story-layout__header section-shell">
-      <p class="section-shell__eyebrow">Stories</p>
+    <header class="story-layout__header">
+      <p class="section-intro__eyebrow">Stories</p>
       <h1>{title}</h1>
       <p class="story-layout__meta">
         <span>{formatDate(publishDate)}</span>
@@ -27,7 +27,7 @@ const { title, description, publishDate, author, category } = Astro.props;
       </p>
       {description && <p class="story-layout__lede">{description}</p>}
     </header>
-    <div class="story-layout__body section-shell">
+    <div class="story-layout__body">
       <slot />
     </div>
   </article>

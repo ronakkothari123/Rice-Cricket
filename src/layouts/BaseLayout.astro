@@ -52,7 +52,7 @@ const canonical = Astro.site
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="site-frame">
-      <SiteHeader />
+      <SiteHeader currentPath={Astro.url.pathname} />
       <main id="main-content" class="site-main">
         <slot />
       </main>

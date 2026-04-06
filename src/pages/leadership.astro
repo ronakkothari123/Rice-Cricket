@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 
+import officerPortrait from "@assets/images/shared/officer-portrait.svg";
+import ProfileCard from "@components/cards/ProfileCard.astro";
+import MediaSplit from "@components/sections/MediaSplit.astro";
+import PageHero from "@components/sections/PageHero.astro";
 import SectionShell from "@components/sections/SectionShell.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { sortLeadership } from "@utils/content";
@@ -9,30 +13,38 @@ const leaders = sortLeadership(await getCollection("leadership"));
 ---
 
 <BaseLayout title="Leadership" description="Leadership and continuity at Rice Cricket Club">
-  <SectionShell
+  <PageHero
     eyebrow="Leadership"
-    title="A public leadership layer that signals continuity without requiring a full roster."
-    lede="This route is intentionally leadership-first for version 1 so the club can stay current more easily across officer transitions."
+    title="A public leadership layer that makes the club feel real and accountable."
+    lede="Version 1 stays leadership-first instead of publishing a full public roster. That keeps the site easier to maintain while still showing continuity, responsibility, and real people behind the club."
+    imageSrc={officerPortrait.src}
+    imageAlt="Rice Cricket leadership placeholder illustration"
+    proof={["Leadership-first v1", "Current officers", "Continuity + accountability"]}
+  />
+
+  <SectionShell
+    eyebrow="Officers"
+    title="Current officers and contact points"
+    lede="These profile cards are designed to feel more human than a directory while still remaining easy to update."
   >
     <div class="grid grid--two">
       {leaders.map((leader) => (
-        <article class="surface-card">
-          <img src={leader.data.photo.src} alt={leader.data.name} />
-          <p class="section-shell__eyebrow">{leader.data.role}</p>
-          <h3>{leader.data.name}</h3>
-          <p>{leader.data.bio}</p>
-          <p class="surface-card__meta">
-            {leader.data.major && <span>{leader.data.major}</span>}
-            {leader.data.year && <span aria-hidden="true">/</span>}
-            {leader.data.year && <span>{leader.data.year}</span>}
-          </p>
-          {leader.data.email && (
-            <p>
-              <a href={`mailto:${leader.data.email}`}>{leader.data.email}</a>
-            </p>
-          )}
-        </article>
+        <ProfileCard profile={leader} />
       ))}
     </div>
+  </SectionShell>
+
+  <SectionShell eyebrow="Continuity" title="Why this page matters" tone="subtle">
+    <MediaSplit
+      title="Leadership pages are about trust as much as names."
+      copy="Students want to know who to contact. Administrators want to know the club is organized. Future officers need a structure that can be updated quickly at handoff time."
+      imageSrc={officerPortrait.src}
+      imageAlt="Rice Cricket leadership placeholder illustration"
+      points={[
+        "Recruitment and communication should have visible ownership.",
+        "Leadership updates should be easy once per semester or year.",
+        "The page should feel current without requiring a full public roster."
+      ]}
+    />
   </SectionShell>
 </BaseLayout>

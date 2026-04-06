@@ -1,54 +1,70 @@
 ---
+import teamHuddle from "@assets/images/shared/team-huddle.svg";
+import FeatureCard from "@components/cards/FeatureCard.astro";
+import StatCard from "@components/cards/StatCard.astro";
+import FAQAccordion from "@components/interactive/FAQAccordion.astro";
+import MediaSplit from "@components/sections/MediaSplit.astro";
+import PageHero from "@components/sections/PageHero.astro";
 import SectionShell from "@components/sections/SectionShell.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { aboutFaqs } from "@data/faqs";
 import { milestones } from "@data/milestones";
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="About" description="About Rice Cricket Club">
-  <SectionShell
+  <PageHero
     eyebrow="About"
-    title="A student organization with room to compete, grow, and build culture."
-    lede="This route stub reflects the structure from the planning docs: mission, relevance, continuity, values, and common questions."
+    title="A student organization with room to compete, belong, and grow."
+    lede="This page now has a stronger editorial structure: explain why cricket belongs at Rice, show continuity over time, and make the club's value legible to multiple audiences."
+    imageSrc={teamHuddle.src}
+    imageAlt="Rice Cricket community placeholder illustration"
+    proof={["Community + competition", "Continuity", "Campus relevance"]}
+  />
+
+  <SectionShell
+    eyebrow="Mission"
+    title="Why cricket at Rice matters"
+    lede="The public story needs to make sense to people beyond the existing club, especially incoming students and university stakeholders."
   >
-    <div class="grid grid--two">
-      <article class="surface-card">
-        <h3>Why cricket at Rice</h3>
-        <p>
-          Rice Cricket can serve students who want competition, community, and a campus space for a
-          globally significant sport. The site should make that relevance obvious.
-        </p>
-      </article>
-      <article class="surface-card">
-        <h3>What the club offers</h3>
-        <p>
-          Version 1 is structured to support recruiting, storytelling, leadership continuity, and a
-          clearer public record of club activity.
-        </p>
-      </article>
+    <MediaSplit
+      title="More than a niche club page"
+      copy="Rice Cricket should feel like a serious, welcoming student organization with real continuity. The About page carries that framing work by combining identity, value, and proof."
+      imageSrc={teamHuddle.src}
+      imageAlt="Rice Cricket team huddle placeholder illustration"
+      points={[
+        "Give newcomers a quick sense of fit and welcome.",
+        "Explain the club's campus relevance in plain language.",
+        "Document continuity so the organization feels durable."
+      ]}
+    />
+  </SectionShell>
+
+  <SectionShell eyebrow="What the club offers" title="The value proposition should be clear" tone="subtle">
+    <div class="grid grid--three">
+      <FeatureCard
+        title="Community"
+        description="A home for students who want connection, continuity, and a shared identity around the sport."
+      />
+      <FeatureCard
+        title="Competition"
+        description="Match play, improvement, and visible momentum should all be part of the public club story."
+      />
+      <FeatureCard
+        title="Leadership"
+        description="The site should show that the club is organized enough to persist across officer transitions."
+      />
     </div>
   </SectionShell>
 
   <SectionShell eyebrow="Timeline" title="Milestones and continuity">
     <div class="grid grid--three">
       {milestones.map((milestone) => (
-        <article class="surface-card">
-          <p class="section-shell__eyebrow">{milestone.year}</p>
-          <h3>{milestone.title}</h3>
-          <p>{milestone.description}</p>
-        </article>
+        <StatCard value={milestone.year} label={milestone.title} note={milestone.description} />
       ))}
     </div>
   </SectionShell>
 
-  <SectionShell eyebrow="FAQ" title="Questions this page should answer">
-    <div class="grid grid--two">
-      {aboutFaqs.map((faq) => (
-        <article class="surface-card">
-          <h3>{faq.question}</h3>
-          <p>{faq.answer}</p>
-        </article>
-      ))}
-    </div>
+  <SectionShell eyebrow="FAQ" title="Questions this page should answer" spacing="compact">
+    <FAQAccordion items={aboutFaqs} />
   </SectionShell>
 </BaseLayout>
